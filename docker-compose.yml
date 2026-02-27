@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  apollo-bot:
+    build: .
+    container_name: apollo-bot
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      # Persist ChromaDB data across restarts
+      - ./data:/app/data
+      # Mount docs so you can update without rebuilding
+      - ./docs:/app/docs
+    # If your services are on the Unraid host network:
+    network_mode: host
+    # Alternative: use bridge network and reference services by Unraid IP
+    # networks:
+    #   - default
